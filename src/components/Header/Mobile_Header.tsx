@@ -29,7 +29,7 @@ const styles = (theme: Theme) => createStyles({
     },
     appBar: {
         // @ts-ignore
-        backgroundColor: theme.palette.HMBlack['900']
+        backgroundColor: 'black'
     },
     logoIconButton: {
         borderRadius: 0

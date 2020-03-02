@@ -46,7 +46,7 @@ const styles = (theme: Theme) => createStyles({
         zIndex: 0,
         width: '100%',
         // @ts-ignore
-        backgroundColor: theme.palette.HMBlack['900']
+        backgroundColor: 'black'
     }
 })
 interface State {

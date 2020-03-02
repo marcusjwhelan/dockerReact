@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {MobileHeader_Comp} from './Mobile_Header'
 import {DesktopHeader_Comp} from './Desktop_Header'
-// @ts-ignore
-import HumanmodeLogo_Transparent_WhiteFont from '../../assets/logos/HumanmodeLogo_Transparent_WhiteFont.png'
 
 interface State {
     mobile: boolean

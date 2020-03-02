@@ -39,10 +39,10 @@ const styles = (theme: Theme) => createStyles({
         contained: {
             color: theme.palette.text.primary,
             // @ts-ignore
-            backgroundColor: theme.palette.HMBlue['900'],
+            backgroundColor: 'blue',
             '&:hover': {
                 // @ts-ignore
-                backgroundColor: theme.palette.HMBlue['800']
+                backgroundColor: 'blue'
             }
         }
     }
