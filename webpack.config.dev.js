@@ -22,7 +22,10 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.json', '.html']
     },
     stats: {
-       // warnings: false // in dev only -> suppress warnings
+        // warnings: false // in dev only -> suppress warnings
+    },
+    watchOptions: {
+        poll: true
     },
     module: {
         rules: [
