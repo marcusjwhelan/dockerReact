@@ -17,7 +17,7 @@ RUN npm install --silent node-gyp -g
 RUN npm install --silent
 
 COPY . /var/www/
-RUN find .
+
 RUN npm run bundle
 
 
