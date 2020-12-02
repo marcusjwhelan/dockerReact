@@ -4,11 +4,13 @@
   "description": "Example",
   "main": "index.js",
   "scripts": {
-      "bundle": "webpack --mode=production --config=webpack.config.js",
-      "start": "webpack serve --config=webpack.config.dev.js --mode=development",
-      "docker_build_dev": "docker build -f Dockerfile.dev -t react-dev-tag .",
-      "docker_start_dev": "docker run -v \"%cd%\":/var/www -v /var/www/node_modules -p 8080:8080 -ti --rm --name dev-react-name react-dev-tag",
-      "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle": "webpack --mode=production --config=webpack.config.js",
+    "start": "webpack serve --config=webpack.config.dev.js --mode=development --host 127.0.0.1",
+    "start_docker": "webpack serve --config=webpack.config.dev.js --mode=development --host 0.0.0.0",
+    "compose_start": "docker-compose -f docker-compose-dev.yml up --build",
+    "docker_build_dev": "docker build -f Dockerfile.dev -t react-dev-tag .",
+    "docker_start_dev": "docker run -v \"%cd%\":/var/www -v /var/www/node_modules -p 8080:8080 -ti --rm --name dev-react-name react-dev-tag",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Marcus Whelan",

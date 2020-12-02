@@ -14,8 +14,9 @@ services:
         protocol: tcp
         mode: host
     volumes:
+      - ./:/var/www
       - node_modules:/var/www/node_modules
-    command: npm run start
+    command: npm run start_docker
 
 volumes:
   node_modules:

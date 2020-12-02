@@ -24,7 +24,6 @@ COPY . /var/www/
 RUN npm run bundle
 
 
-
 # -------------- Stage 2 --------------------------
 # specific nginx version
 FROM nginx:1.19.5-alpine

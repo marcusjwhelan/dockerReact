@@ -13,12 +13,6 @@ module.exports = {
     path.join(PATH_SOURCE, './index.tsx')
   ],
 
-  // and output it into /dist as bundle.js
-  output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
-    publicPath: '/'
-  },
   devtool: 'source-map',
   // adding .ts and .tsx to resolve.extensions will help babel look for .ts and .tsx files to transpile
   resolve: {
