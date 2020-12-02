@@ -10,19 +10,19 @@ export const history: History = createHashHistory()
 export type AppState = ReturnType<typeof rootReducer>
 
 export const configureStore = (initialState: any = {}) => {
-    const routerMiddleware = createRouterMiddleware(history)
-    let middlewares = (process.env.NODE_ENV === 'production') ?
-        [thunk, routerMiddleware]
-        :
-        [thunk, routerMiddleware, logger]
+  const routerMiddleware = createRouterMiddleware(history)
+  let middlewares = (process.env.NODE_ENV === 'production') ?
+    [thunk, routerMiddleware]
+    :
+    [thunk, routerMiddleware, logger]
 
-    const middleware = compose(applyMiddleware(...middlewares))
-    // root state is all reducers names an types in interface
-    // root actions is all actions types as one type
-    // root state, root actions
-    return createStore<ApplicationState, any, {}, {}>(
-        rootReducer(history),
-        initialState as any,
-        middleware
-    )
+  const middleware = compose(applyMiddleware(...middlewares))
+  // root state is all reducers names an types in interface
+  // root actions is all actions types as one type
+  // root state, root actions
+  return createStore<ApplicationState, any, {}, {}>(
+    rootReducer(history),
+    initialState as any,
+    middleware
+  )
 }

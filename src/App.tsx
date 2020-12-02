@@ -8,17 +8,18 @@ import {Base_Router} from './containers/BaseRouter'
 import {HMTheme} from './theme/theme'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {BrowserRouter} from 'react-router-dom'
+
 const store = configureStore()
 
 export const Application = () => (
-    <Provider store={store}>
-        <MuiThemeProvider theme={HMTheme}>
-            <CssBaseline />
-            <ConnectedRouter history={history}>
-                <BrowserRouter>
-                    <Base_Router />
-                </BrowserRouter>
-            </ConnectedRouter>
-        </MuiThemeProvider>
-    </Provider>
+  <Provider store={store}>
+    <MuiThemeProvider theme={HMTheme}>
+      <CssBaseline/>
+      <ConnectedRouter history={history}>
+        <BrowserRouter>
+          <Base_Router/>
+        </BrowserRouter>
+      </ConnectedRouter>
+    </MuiThemeProvider>
+  </Provider>
 )

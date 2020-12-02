@@ -1,6 +1,6 @@
 /** EXAMPLE */
 import {
-    TExampleDispatch
+  TExampleDispatch
 } from './example'
 
 /** Module Action Type Exports */

@@ -18,173 +18,176 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import {connect} from 'react-redux'
 import HideOnScroll from '../HideOnScroll'
 import {
-    HeaderBase, HeaderProps, HeaderMapStateToProps, HeaderMapDispatchToProps,
-    HeaderIStateProps, HeaderInjectedProps, HeaderIDispatchProps
+  HeaderBase, HeaderProps, HeaderMapStateToProps, HeaderMapDispatchToProps,
+  HeaderIStateProps, HeaderInjectedProps, HeaderIDispatchProps
 } from './classes/Header'
 
 const drawerWidth: number = 240
 const styles = (theme: Theme) => createStyles({
-    whiteText: {
-        color: 'white'
+  whiteText: {
+    color: 'white'
+  },
+  root: {
+    flexGrow: 1
+  },
+  appBar: {
+    maxHeight: 78,
+    // @ts-ignore
+    backgroundColor: 'black'
+  },
+  logoIconButton: {
+    borderRadius: 0
+  },
+  toolBar: {
+    paddingRight: '.5rem',
+    paddingLeft: '1rem'
+  },
+  logo: {
+    'minHeight': 150,
+    'maxHeight': 150,
+    '@media (min-width:0px) and (orientation: landscape)': {
+      'minHeight': 28,
+      'maxHeight': 28
     },
-    root: {
-        flexGrow: 1
-    },
-    appBar: {
-        maxHeight: 78,
-        // @ts-ignore
-        backgroundColor: 'black'
-    },
-    logoIconButton: {
-        borderRadius: 0
-    },
-    toolBar: {
-        paddingRight: '.5rem',
-        paddingLeft: '1rem'
-    },
-    logo: {
-        'minHeight': 150,
-        'maxHeight': 150,
-        '@media (min-width:0px) and (orientation: landscape)': {
-            'minHeight': 28,
-            'maxHeight': 28
-        },
-        '@media (min-width:600px)': {
-            'minHeight': 44,
-            'maxHeight': 44
-        }
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0
-    },
-    drawerPaper: {
-        width: drawerWidth,
-        backgroundColor: 'black'
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-start'
-    },
-    paper: {
-        position: 'absolute',
-        top: 68,
-        zIndex: 10
+    '@media (min-width:600px)': {
+      'minHeight': 44,
+      'maxHeight': 44
     }
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    backgroundColor: 'black'
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-start'
+  },
+  paper: {
+    position: 'absolute',
+    top: 68,
+    zIndex: 10
+  }
 })
 
 interface State {
-    // toggles
-    mobileDrawerOpen: boolean
+  // toggles
+  mobileDrawerOpen: boolean
 }
 
-interface IStyles extends WithStyles<typeof styles> {}
+interface IStyles extends WithStyles<typeof styles> {
+}
 
 class MobileHeader extends HeaderBase<IStyles, State> {
-    // toggles
-    private _mobileDrawerOpen: string = 'mobileDrawerOpen'
-    constructor(props: HeaderProps & IStyles) {
-        super(props)
-        this.state = {
-            // snackbar show
-            ...this.ErrorHandlerStateInit,
-            // toggles
-            mobileDrawerOpen: false
-        }
-        this.openMobileDrawer = this.openMobileDrawer.bind(this)
-        this.closeMobileDrawer = this.closeMobileDrawer.bind(this)
-        this.toggleMobileDrawer = this.toggleMobileDrawer.bind(this)
-        this.selectHome = this.selectHome.bind(this)
-    }
+  // toggles
+  private _mobileDrawerOpen: string = 'mobileDrawerOpen'
 
-    private openMobileDrawer() {
-        this.setValue(this._mobileDrawerOpen, true)
+  constructor(props: HeaderProps & IStyles) {
+    super(props)
+    this.state = {
+      // snackbar show
+      ...this.ErrorHandlerStateInit,
+      // toggles
+      mobileDrawerOpen: false
     }
+    this.openMobileDrawer = this.openMobileDrawer.bind(this)
+    this.closeMobileDrawer = this.closeMobileDrawer.bind(this)
+    this.toggleMobileDrawer = this.toggleMobileDrawer.bind(this)
+    this.selectHome = this.selectHome.bind(this)
+  }
 
-    private closeMobileDrawer() {
-        this.setValue(this._mobileDrawerOpen, false)
+  private openMobileDrawer() {
+    this.setValue(this._mobileDrawerOpen, true)
+  }
+
+  private closeMobileDrawer() {
+    this.setValue(this._mobileDrawerOpen, false)
+  }
+
+  private toggleMobileDrawer(_: React.KeyboardEvent | React.MouseEvent) {
+    if (this.state.mobileDrawerOpen) {
+      this.closeMobileDrawer()
+    } else {
+      this.openMobileDrawer()
     }
+  }
 
-    private toggleMobileDrawer(_: React.KeyboardEvent | React.MouseEvent) {
-        if (this.state.mobileDrawerOpen) {
-            this.closeMobileDrawer()
-        } else {
-            this.openMobileDrawer()
-        }
+  private selectHome(_: React.KeyboardEvent | React.MouseEvent) {
+    this.closeMobileDrawer()
+    if (this.props.path !== '/') {
+      this.props.push('/')
     }
+  }
 
-    private selectHome(_: React.KeyboardEvent | React.MouseEvent) {
-        this.closeMobileDrawer()
-        if (this.props.path !== '/') {
-            this.props.push('/')
-        }
-    }
+  public render() {
+    const {classes} = this.props
+    const {mobileDrawerOpen} = this.state
 
-    public render() {
-        const {classes} = this.props
-        const {mobileDrawerOpen} = this.state
-
-        return (
-            <div className={classes.root}>
-                <HideOnScroll {...this.props}>
-                    <AppBar position="static"
-                            className={clsx(classes.appBar)}
-                    >
-                        <Toolbar className={classes.toolBar}>
-                            <Box display={'flex'} width={'100%'} flexDirection={'row'}>
-                                <Box>
-                                    <IconButton
-                                        edge={'start'}
-                                        classes={{root: classes.logoIconButton}}
-                                        onClick={this.selectHome}>
-                                        Home
-                                    </IconButton>
-                                </Box>
-                                <Box ml={'auto'}>
-                                    <IconButton
-                                        onClick={this.toggleMobileDrawer}
-                                    >
-                                        <MenuIcon fontSize={'large'}/>
-                                    </IconButton>
-                                </Box>
-                            </Box>
-                        </Toolbar>
-                    </AppBar>
-                </HideOnScroll>
-                <Drawer
-                    className={classes.drawer}
-                    anchor="right"
-                    open={mobileDrawerOpen}
-                    onClose={this.toggleMobileDrawer}
-                    classes={{
-                        paper: classes.drawerPaper
-                    }}
-                >
-                    <div className={classes.drawerHeader}>
-                        <IconButton
-                            onClick={this.toggleMobileDrawer}>
-                            <ChevronRightIcon/>
-                        </IconButton>
-                    </div>
-                    <Divider/>
-                    <List>
-                        <ListItem button onClick={this.selectHome}>
-                            <ListItemIcon>
-                                <HomeIcon/>
-                            </ListItemIcon>
-                            <ListItemText classes={{root: classes.whiteText}} primary={'Home'}/>
-                        </ListItem>
-                    </List>
-                </Drawer>
-                {this.renderErrorHandler()}
-            </div>
-        )
-    }
+    return (
+      <div className={classes.root}>
+        <HideOnScroll {...this.props}>
+          <AppBar position="static"
+                  className={clsx(classes.appBar)}
+          >
+            <Toolbar className={classes.toolBar}>
+              <Box display={'flex'} width={'100%'} flexDirection={'row'}>
+                <Box>
+                  <IconButton
+                    edge={'start'}
+                    classes={{root: classes.logoIconButton}}
+                    onClick={this.selectHome}>
+                    Home
+                  </IconButton>
+                </Box>
+                <Box ml={'auto'}>
+                  <IconButton
+                    onClick={this.toggleMobileDrawer}
+                  >
+                    <MenuIcon fontSize={'large'}/>
+                  </IconButton>
+                </Box>
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </HideOnScroll>
+        <Drawer
+          className={classes.drawer}
+          anchor="right"
+          open={mobileDrawerOpen}
+          onClose={this.toggleMobileDrawer}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton
+              onClick={this.toggleMobileDrawer}>
+              <ChevronRightIcon/>
+            </IconButton>
+          </div>
+          <Divider/>
+          <List>
+            <ListItem button onClick={this.selectHome}>
+              <ListItemIcon>
+                <HomeIcon/>
+              </ListItemIcon>
+              <ListItemText classes={{root: classes.whiteText}} primary={'Home'}/>
+            </ListItem>
+          </List>
+        </Drawer>
+        {this.renderErrorHandler()}
+      </div>
+    )
+  }
 }
 
 export const MobileHeader_Comp = withStyles(styles)(
-    connect<HeaderIStateProps, HeaderIDispatchProps, HeaderInjectedProps>(HeaderMapStateToProps, HeaderMapDispatchToProps)(MobileHeader)
+  connect<HeaderIStateProps, HeaderIDispatchProps, HeaderInjectedProps>(HeaderMapStateToProps,
+    HeaderMapDispatchToProps)(MobileHeader)
 )

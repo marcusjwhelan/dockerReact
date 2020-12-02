@@ -17,105 +17,113 @@ const ScrollTop = lazy(() => import('../components/ScrollTop'))
 const Home = lazy(() => import('./Home/Home'))
 
 const styles = (_theme: Theme) => createStyles({
-    container: {
-        position: 'relative',
-        display: 'flex',
-        minHeight: '100%',
-        flexDirection: 'column',
-        margin: 0
-    },
-    header: {
-        position: 'fixed',
-        width: '100%',
-        top: 0,
-        zIndex: 15
-    },
-    toolBarG: {
-        minHeight: 64,
-        '@media only screen and (max-width:840px)': {
-            minHeight: 78
-        }
-    },
-    contentDesktop: {
-        marginTop: 0,
-        marginRight: '1rem',
-        minHeight: '100vh',
-        zIndex: 0
-    },
-    contentMobile: {
-        marginTop: 0,
-        marginRight: '.4rem',
-        minHeight: '100vh',
-        zIndex: 0
-    },
-    fab: {
-        zIndex: 100
-    },
-    footer: {
-        bottom: 0,
-        width: '100%',
-        // @ts-ignore
-        backgroundColor: 'black'
+  container: {
+    position: 'relative',
+    display: 'flex',
+    minHeight: '100%',
+    flexDirection: 'column',
+    margin: 0
+  },
+  header: {
+    position: 'fixed',
+    width: '100%',
+    top: 0,
+    zIndex: 15
+  },
+  toolBarG: {
+    minHeight: 64,
+    '@media only screen and (max-width:840px)': {
+      minHeight: 78
     }
+  },
+  contentDesktop: {
+    marginTop: 0,
+    marginRight: '1rem',
+    minHeight: '100vh',
+    zIndex: 0
+  },
+  contentMobile: {
+    marginTop: 0,
+    marginRight: '.4rem',
+    minHeight: '100vh',
+    zIndex: 0
+  },
+  fab: {
+    zIndex: 100
+  },
+  footer: {
+    bottom: 0,
+    width: '100%',
+    // @ts-ignore
+    backgroundColor: 'black'
+  }
 })
+
 interface State {
-    mobile: boolean
+  mobile: boolean
 }
+
 interface IStateProps {
-    router: any
+  router: any
 }
 
 interface IDispatchProps {
 }
-interface InjectedProps extends WithStyles<typeof styles> {}
+
+interface InjectedProps extends WithStyles<typeof styles> {
+}
 
 type BaserRouterProps = IStateProps & IDispatchProps & InjectedProps
 
 const mapStateToProps = (state: any): IStateProps => {
-    const router = state.router
-    return {
-        router: router
-    }
+  const router = state.router
+  return {
+    router: router
+  }
 }
 
 class BaseRouter extends ErrorHandlerHoc<BaserRouterProps, State> {
-    /**
-     * Local Variables
-     */
-    constructor(props: BaserRouterProps) {
-        super(props)
-        this.state = {
-            ...this.ErrorHandlerStateInit,
-            // set background color
-            mobile: false
-        }
-        this.resize = this.resize.bind(this)
+  /**
+   * Local Variables
+   */
+  constructor(props: BaserRouterProps) {
+    super(props)
+    this.state = {
+      ...this.ErrorHandlerStateInit,
+      // set background color
+      mobile: false
     }
-    private resize() {
-        this.setValue('mobile', window.innerWidth <= 840)
-    }
-    public componentDidMount(): void {
-        window.addEventListener('resize', this.resize)
-        this.resize()
-    }
-    public componentDidUpdate(_prevProps: Readonly<BaserRouterProps>, _prevState: Readonly<EHHocState & State>, _snapshot?: any): void {
-    }
+    this.resize = this.resize.bind(this)
+  }
 
-    public render() {
-        const {classes} = this.props
-        const {mobile} = this.state
-        return (
-            <div className={classes.container}>
-                <div className={classes.header}>
-                    <Header_Comp />
-                </div>
-                <Toolbar className={classes.toolBarG} disableGutters={true} variant={'dense'} id={'back-to-top-anchor'}/>
-                <Box className={mobile ? classes.contentMobile : classes.contentDesktop} bgcolor={'background.default'}>
-                    {/* Main section for Routes */}
-                    <Suspense fallback={<Loading/>}>
-                        <Switch>
-                              {/* Example private */}
-{/*                            <PrivateRouter path={'/example'}
+  private resize() {
+    this.setValue('mobile', window.innerWidth <= 840)
+  }
+
+  public componentDidMount(): void {
+    window.addEventListener('resize', this.resize)
+    this.resize()
+  }
+
+  public componentDidUpdate(_prevProps: Readonly<BaserRouterProps>, _prevState: Readonly<EHHocState & State>,
+                            _snapshot?: any): void {
+  }
+
+  public render() {
+    const {classes} = this.props
+    const {mobile} = this.state
+    return (
+      <div className={classes.container}>
+        <div className={classes.header}>
+          <Header_Comp/>
+        </div>
+        <Toolbar className={classes.toolBarG} disableGutters={true} variant={'dense'} id={'back-to-top-anchor'}/>
+        <Box className={mobile ? classes.contentMobile : classes.contentDesktop} bgcolor={'background.default'}>
+          {/* Main section for Routes */}
+          <Suspense fallback={<Loading/>}>
+            <Switch>
+              {/* Example private */}
+              {/*                            <PrivateRouter path={'/example'}
                                            component={Example}
                                            super_redirectPath={'/Example'}
                                            super_openSnackbar={this.openSnackbar}
@@ -125,27 +133,27 @@ class BaseRouter extends ErrorHandlerHoc<BaserRouterProps, State> {
                                            _super_warningMessage={this._warningMessage}
                                            _super_errorMessage={this._errorMessage}
                             />*/}
-                            <Route exact path="/" name="Home" component={Home}/>
-                        </Switch>
-                    </Suspense>
-                    {/* Error messages and information */}
-                    {this.renderErrorHandler()}
-                </Box>
-                <div className={classes.footer}>
-                    <Footer_comp/>
-                </div>
-                <Suspense fallback={<div/>}>
-                    <ScrollTop {...this.props}>
-                        <Fab className={classes.fab} color="primary" size="large" aria-label="scroll back to top">
-                            <KeyboardArrowUpIcon />
-                        </Fab>
-                    </ScrollTop>
-                </Suspense>
-            </div>
-        )
-    }
+              <Route exact path="/" name="Home" component={Home}/>
+            </Switch>
+          </Suspense>
+          {/* Error messages and information */}
+          {this.renderErrorHandler()}
+        </Box>
+        <div className={classes.footer}>
+          <Footer_comp/>
+        </div>
+        <Suspense fallback={<div/>}>
+          <ScrollTop {...this.props}>
+            <Fab className={classes.fab} color="primary" size="large" aria-label="scroll back to top">
+              <KeyboardArrowUpIcon/>
+            </Fab>
+          </ScrollTop>
+        </Suspense>
+      </div>
+    )
+  }
 }
 
 export const Base_Router = withStyles(styles)(
-    connect<IStateProps, {}, InjectedProps>(mapStateToProps, {})(BaseRouter)
+  connect<IStateProps, {}, InjectedProps>(mapStateToProps, {})(BaseRouter)
 )

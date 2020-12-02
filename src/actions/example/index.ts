@@ -1,5 +1,5 @@
 import {
-    TexampleDispatch
+  TexampleDispatch
 } from './types'
 
 export * from './types'
