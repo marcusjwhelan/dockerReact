@@ -33,11 +33,9 @@ class Header extends Component<{}, State> {
         return (
             <div>
                 {mobile ?
-                    <MobileHeader_Comp
-                    />
+                    <MobileHeader_Comp/>
                     :
-                    <DesktopHeader_Comp
-                    />
+                    <DesktopHeader_Comp/>
                 }
             </div>
         )

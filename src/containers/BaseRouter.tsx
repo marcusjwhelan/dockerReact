@@ -1,5 +1,5 @@
 import React, {Suspense, lazy} from 'react'
-import {Route, Switch} from 'react-router'
+import {Route, Switch} from 'react-router-dom'
 import {Header_Comp} from '../components/Header/Header'
 import Footer_comp from '../components/Footer/Footer'
 // import {PrivateRouter} from './PrivateRoute'
@@ -16,7 +16,7 @@ import {ErrorHandlerHoc, EHHocState} from '../components/classes/ErrorHandlerHoc
 const ScrollTop = lazy(() => import('../components/ScrollTop'))
 const Home = lazy(() => import('./Home/Home'))
 
-const styles = (theme: Theme) => createStyles({
+const styles = (_theme: Theme) => createStyles({
     container: {
         position: 'relative',
         display: 'flex',
@@ -31,10 +31,20 @@ const styles = (theme: Theme) => createStyles({
         zIndex: 15
     },
     toolBarG: {
-        minHeight: 69
+        minHeight: 64,
+        '@media only screen and (max-width:840px)': {
+            minHeight: 78
+        }
     },
-    content: {
+    contentDesktop: {
         marginTop: 0,
+        marginRight: '1rem',
+        minHeight: '100vh',
+        zIndex: 0
+    },
+    contentMobile: {
+        marginTop: 0,
+        marginRight: '.4rem',
         minHeight: '100vh',
         zIndex: 0
     },
@@ -43,7 +53,6 @@ const styles = (theme: Theme) => createStyles({
     },
     footer: {
         bottom: 0,
-        zIndex: 0,
         width: '100%',
         // @ts-ignore
         backgroundColor: 'black'
@@ -101,7 +110,7 @@ class BaseRouter extends ErrorHandlerHoc<BaserRouterProps, State> {
                     <Header_Comp />
                 </div>
                 <Toolbar className={classes.toolBarG} disableGutters={true} variant={'dense'} id={'back-to-top-anchor'}/>
-                <Box className={classes.content} bgcolor={mobile ? 'grey.800' : 'background.default'}>
+                <Box className={mobile ? classes.contentMobile : classes.contentDesktop} bgcolor={'background.default'}>
                     {/* Main section for Routes */}
                     <Suspense fallback={<Loading/>}>
                         <Switch>
@@ -138,5 +147,5 @@ class BaseRouter extends ErrorHandlerHoc<BaserRouterProps, State> {
 }
 
 export const Base_Router = withStyles(styles)(
-    connect<IStateProps, null, InjectedProps>(mapStateToProps, null)(BaseRouter)
+    connect<IStateProps, {}, InjectedProps>(mapStateToProps, {})(BaseRouter)
 )

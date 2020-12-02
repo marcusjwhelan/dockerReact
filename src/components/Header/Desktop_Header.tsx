@@ -13,7 +13,7 @@ import {
     HeaderMapDispatchToProps, HeaderMapStateToProps
 } from './classes/Header'
 
-const styles = (theme: Theme) => createStyles({
+const styles = (_theme: Theme) => createStyles({
     root: {
         flexGrow: 1
     },
@@ -78,8 +78,10 @@ class DesktopHeader extends HeaderBase<IStyles, State> {
                             <Box display={'flex'} width={'100%'} flexDirection={'row'}>
                                 <Box>
                                     <IconButton edge="start"
+                                                size={'small'}
                                                 classes={{root: classes.logoIconButton}}
                                                 onClick={this.selectHome}>
+                                        Home
                                     </IconButton>
                                 </Box>
                             </Box>

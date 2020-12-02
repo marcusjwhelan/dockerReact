@@ -1,11 +1,11 @@
 const path = require('path')
-const webpack = require('webpack')
+const {webpack, DefinePlugin} = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const AsyncChunkNames = require('webpack-async-chunk-names-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 const PATH_SOURCE = path.join(__dirname, './src')
+const PATH_PUBLIC = path.join(__dirname, './public')
 const PATH_DIST = path.join(__dirname, './build')
 
 module.exports = {
@@ -19,9 +19,9 @@ module.exports = {
     // and output it into /dist as bundle.js
     output: {
         path: PATH_DIST,
-        filename: '[name].[hash].js',
+        filename: '[name].[chunkhash].js',
         publicPath: './',
-        chunkFilename: '[name].[hash].js'
+        chunkFilename: '[name].[chunkhash].js'
     },
     devtool: false,
     // adding .ts and .tsx to resolve.extensions will help babel look for .ts and .tsx files to transpile
@@ -41,8 +41,8 @@ module.exports = {
             },
             // css-loader to bundle all the css files into one file and style-loader to add all the styles  inside the style tag of the document
             {
-                test: /\.(scss|css)$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             },
             {
                 type: 'javascript/auto',
@@ -56,35 +56,69 @@ module.exports = {
             },
             {
                 test: /\.woff(\?.*)?$/,
-                loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff'
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[path][name].[ext]',
+                    mimetype: 'application/font-woff'
+                }
             },
             {
                 test: /\.woff2(\?.*)?$/,
-                loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2'
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[path][name].[ext]',
+                    mimetype: 'application/font-woff2'
+                }
             },
             {
                 test: /\.otf(\?.*)?$/,
-                loader: 'file-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype'
+                loader: 'file-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[path][name].[ext]',
+                    mimetype: 'font/opentype'
+                }
             },
             {
                 test: /\.ttf(\?.*)?$/,
-                loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream'
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[path][name].[ext]',
+                    mimetype: 'application/octet-stream'
+                }
             },
             {
                 test: /\.eot(\?.*)?$/,
-                loader: 'file-loader?prefix=fonts/&name=[path][name].[ext]'
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[path][name].[ext]',
+                }
             },
             {
                 test: /\.svg(\?.*)?$/,
-                loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml'
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: 'fonts/[path][name].[ext]',
+                    mimetype: 'image/svg+xml'
+                }
             },
             {
                 test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=8192'
+                loader: 'url-loader',
+                options: {
+                    limit: 8192
+                }
             },
             {
                 test: /\.ico$/,
-                loader: 'file-loader?name=[name].[ext]'
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/[path][name].[ext]'
+                }
             }
         ]
     },
@@ -96,6 +130,7 @@ module.exports = {
 
                 // vendor chunk
                 vendor: {
+                    minChunks: 4,
                     // name of the chunk
                     name: 'vendor',
 
@@ -124,8 +159,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            favicon: path.join(PATH_SOURCE, './favicon.ico'),
-            template: path.join(PATH_SOURCE, './index.html'),
+            favicon: path.join(PATH_PUBLIC, './favicon.ico'),
+            template: path.join(PATH_PUBLIC, './index.html'),
             filename: 'index.html',
             inject: 'body',
             chunksSortMode: 'auto'
@@ -142,28 +177,27 @@ module.exports = {
                 'apple-mobile-web-app-title': 'Example',
                 'apple-mobile-web-app-status-bar-style': 'black'
             },
-           /* icons: [
+            icons: [
                 {
-                    src: path.resolve('src/assets/icon/HiRes.png'),
-                    size: '1152x1152' // you can also use the specifications pattern
+                    src: path.resolve('public/logo512.png'),
+                    size: '512x512' // you can also use the specifications pattern
                 },
                 {
-                    src: path.resolve('src/assets/icon/192x192_iPhoneIcon_2.png'),
+                    src: path.resolve('public/logo192.png'),
                     size: '192x192',
                     destination: path.join('icons', 'ios'),
                     ios: true
                 },
                 {
-                    src: path.resolve('src/assets/icon/192x192_iPhoneIcon_2.png'),
+                    src: path.resolve('public/logo192.png'),
                     size: '192x192',
                     destination: path.join('icons', 'android')
                 }
-            ]*/
+            ]
         }),
-        new AsyncChunkNames(),
-        new webpack.DefinePlugin({
+        new DefinePlugin({
             'process.env': {
-                'ENV': JSON.stringify('production')
+                NODE_ENV: JSON.stringify('production')
             }
         })
     ]

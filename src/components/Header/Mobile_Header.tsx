@@ -24,10 +24,14 @@ import {
 
 const drawerWidth: number = 240
 const styles = (theme: Theme) => createStyles({
+    whiteText: {
+        color: 'white'
+    },
     root: {
         flexGrow: 1
     },
     appBar: {
+        maxHeight: 78,
         // @ts-ignore
         backgroundColor: 'black'
     },
@@ -39,8 +43,8 @@ const styles = (theme: Theme) => createStyles({
         paddingLeft: '1rem'
     },
     logo: {
-        'minHeight': 36,
-        'maxHeight': 36,
+        'minHeight': 150,
+        'maxHeight': 150,
         '@media (min-width:0px) and (orientation: landscape)': {
             'minHeight': 28,
             'maxHeight': 28
@@ -55,7 +59,8 @@ const styles = (theme: Theme) => createStyles({
         flexShrink: 0
     },
     drawerPaper: {
-        width: drawerWidth
+        width: drawerWidth,
+        backgroundColor: 'black'
     },
     drawerHeader: {
         display: 'flex',
@@ -66,8 +71,8 @@ const styles = (theme: Theme) => createStyles({
     },
     paper: {
         position: 'absolute',
-        top: 64,
-        zIndex: 4
+        top: 68,
+        zIndex: 10
     }
 })
 
@@ -129,13 +134,13 @@ class MobileHeader extends HeaderBase<IStyles, State> {
                             className={clsx(classes.appBar)}
                     >
                         <Toolbar className={classes.toolBar}>
-                            <Box display={'flex'} width={'100%'}>
+                            <Box display={'flex'} width={'100%'} flexDirection={'row'}>
                                 <Box>
-                                    <IconButton edge="start"
-                                                classes={{
-                                                    root: classes.logoIconButton
-                                                }}
-                                                onClick={this.selectHome}>
+                                    <IconButton
+                                        edge={'start'}
+                                        classes={{root: classes.logoIconButton}}
+                                        onClick={this.selectHome}>
+                                        Home
                                     </IconButton>
                                 </Box>
                                 <Box ml={'auto'}>
@@ -159,7 +164,8 @@ class MobileHeader extends HeaderBase<IStyles, State> {
                     }}
                 >
                     <div className={classes.drawerHeader}>
-                        <IconButton onClick={this.toggleMobileDrawer}>
+                        <IconButton
+                            onClick={this.toggleMobileDrawer}>
                             <ChevronRightIcon/>
                         </IconButton>
                     </div>
@@ -169,7 +175,7 @@ class MobileHeader extends HeaderBase<IStyles, State> {
                             <ListItemIcon>
                                 <HomeIcon/>
                             </ListItemIcon>
-                            <ListItemText primary={'Home'}/>
+                            <ListItemText classes={{root: classes.whiteText}} primary={'Home'}/>
                         </ListItem>
                     </List>
                 </Drawer>

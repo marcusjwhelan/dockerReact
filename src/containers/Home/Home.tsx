@@ -46,12 +46,12 @@ interface HocInjected {
 
 type HomeProps = IStateProps & IDispatchProps & InjectedProps & HocInjected
 
-const mapStateToProps = (state: any): IStateProps => {
+const mapStateToProps = (_state: any): IStateProps => {
     return {
     }
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, any>): IDispatchProps => {
+const mapDispatchToProps = (_dispatch: ThunkDispatch<AppState, void, any>): IDispatchProps => {
     return {
     }
 }

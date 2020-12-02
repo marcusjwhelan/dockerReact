@@ -11,7 +11,7 @@ export type AppState = ReturnType<typeof rootReducer>
 
 export const configureStore = (initialState: any = {}) => {
     const routerMiddleware = createRouterMiddleware(history)
-    let middlewares = (process.env.ENV === 'production') ?
+    let middlewares = (process.env.NODE_ENV === 'production') ?
         [thunk, routerMiddleware]
         :
         [thunk, routerMiddleware, logger]

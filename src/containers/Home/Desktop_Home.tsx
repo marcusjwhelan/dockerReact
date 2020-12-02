@@ -1,4 +1,4 @@
-import React, {Component, Suspense, lazy} from 'react'
+import React, {Component} from 'react'
 import {createStyles, Theme, WithStyles} from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Box from '@material-ui/core/Box'
@@ -7,10 +7,9 @@ import Container from '@material-ui/core/Container'
 const styles = (_theme: Theme) => createStyles({
     ContainerRoot: {
         height: '100%',
-        paddingLeft: '1rem',
-        paddingRight: '2rem',
-        maxWidth: 1600,
-        paddingTop: 24
+        paddingLeft: '0',
+        paddingRight: '0',
+        maxWidth: 1600
     }
 })
 

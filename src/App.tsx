@@ -7,7 +7,7 @@ import {configureStore} from './store'
 import {Base_Router} from './containers/BaseRouter'
 import {HMTheme} from './theme/theme'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import './favicon.ico'
+import {BrowserRouter} from 'react-router-dom'
 const store = configureStore()
 
 export const Application = () => (
@@ -15,7 +15,9 @@ export const Application = () => (
         <MuiThemeProvider theme={HMTheme}>
             <CssBaseline />
             <ConnectedRouter history={history}>
-                <Base_Router/>
+                <BrowserRouter>
+                    <Base_Router />
+                </BrowserRouter>
             </ConnectedRouter>
         </MuiThemeProvider>
     </Provider>

@@ -72,8 +72,8 @@ export const HMTheme = createMuiTheme({
     palette: {
         tonalOffset: 0.2,
         background: {
-            default: '#212121',
-            paper: '#616161'
+            default: '#FEFEFE',
+            paper: '#d7d7d7'
         },
         contrastThreshold: 3,
         grey: {
@@ -93,11 +93,10 @@ export const HMTheme = createMuiTheme({
             'A200': '#aaaaaa'
         },
         text: {
-            primary: '#fff',
+            primary: '#000',
             secondary: 'rgba(255, 255, 255, 0.7)',
             disabled: 'rgba(255, 255, 255, 0.5)',
-            hint: 'rgba(255, 255, 255, 0.5)',
-            icon: 'rgba(255, 255, 255, 0.5)'
+            hint: 'rgba(255, 255, 255, 0.5)'
         },
         divider: 'rgba(255, 255, 255, 0.40)',
         primary: {
@@ -132,4 +131,23 @@ export const HMTheme = createMuiTheme({
             disabledBackground: 'rgba(255, 255, 255, 0.12)'
         }
     }
+    /**
+     * HERE ADD YOUR CUSTOM COLOR PALETTES
+     *
+     * EXAMPLE:
+     *
+     * // @ts-ignore
+     Custom_Red: {
+            '50': '#ffebee',
+            '100': '#ffcdd3',
+            '200': '#f49a9a',
+            '300': '#ec7273',
+            '400': '#f7504f', // light
+            '500': '#fc3e33',
+            '600': '#ee3333',
+            '700': '#dc282d',
+            '800': '#cf2026', // red
+            '900': '#c00e19'  // dark
+        },
+     */
 })

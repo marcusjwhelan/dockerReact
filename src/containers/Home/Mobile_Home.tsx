@@ -100,17 +100,20 @@ class MobileHome extends ErrorHandlerHoc<HomeProps, State> {
                               _snapshot?: any): void {
         /** Handle example */
         if (this.state.getExampleWaiter &&
-            (this.props.get_example || this.props.get_example_error)
+            (this.props.get_example || this.props.get_example_error) &&
+            (!this.state.error && !this.state.info && !this.state.warning && !this.state.error)
         ) {
             if (this.props.get_example_error) {
                 // handle example error
                 this.setValue(this._errorMessage, 'error')
                 this.openSnackbar(this._error)
+                this.setValue(this._getExampleWaiter, false)
             }
             if (this.props.get_example) {
                 // handle example success
                 this.setValue(this._successMessage, 'success')
                 this.openSnackbar(this._success)
+                this.setValue(this._getExampleWaiter, false)
                 this.props.clearGetExampleAction()
             }
         }

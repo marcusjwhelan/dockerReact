@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+    client:
+        container_name: docker_react_dev_container
+        restart: always
+        hostname: client
+        build:
+            context: ./
+            dockerfile: Dockerfile.dev
+        ports:
+            - target: 3000
+              published: 3000
+              protocol: tcp
+              mode: host
+        volumes:
+            - node_modules:/var/www/node_modules
+        command: npm run start
+
+volumes:
+    node_modules:
+        driver: local
