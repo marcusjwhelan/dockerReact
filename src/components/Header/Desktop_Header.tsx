@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {createStyles, Theme, WithStyles} from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -9,6 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import HideOnScroll from '../HideOnScroll'
 import useErrorHandler from '../useErrorHandler'
 import {useRouter} from '../useRouter'
+import {setValue} from '../../utils/setValue'
 
 const styles = (_theme: Theme) => createStyles({
   root: {
@@ -51,6 +52,11 @@ interface IStyles extends WithStyles<typeof styles> {
 function DesktopHeader(props: IStyles) {
   const {classes} = props
   const {
+    setEHState,
+    state,
+    openSnackbar,
+    _error,
+    _errorMessage,
     renderErrorHandler
   } = useErrorHandler()
   const {pathname, push} = useRouter()
@@ -60,6 +66,11 @@ function DesktopHeader(props: IStyles) {
       push('/')
     }
   }
+  useEffect(() => {
+    setEHState(setValue(_errorMessage, 'hello world'))
+    openSnackbar(_error)
+  }, [])
+
   return (
     <div className={classes.root}>
       <HideOnScroll {...props}>
