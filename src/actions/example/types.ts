@@ -11,19 +11,19 @@ import {IExample} from '../../models/example'
 /**
  * Interfaces/Types for Example
  */
-export interface IexampleSuccess extends Action<any> {
+export interface IExampleSuccess extends Action {
   type: EXAMPLE.GET_EXAMPLE
-  payload: IExample
+  payload: IExample[]
 }
 
-export interface IexampleError extends Action<any> {
+export interface IExampleError extends Action {
   type: EXAMPLE.GET_EXAMPLE_ERROR
-  payload: IExample
+  payload: string
 }
 
-export interface IexampleClear extends Action<any> {
+export interface IExampleClear extends Action {
   type: EXAMPLE.GET_EXAMPLE_CLEAR
 }
 
-export type TexampleDispatch = IexampleSuccess | IexampleError | IexampleClear
+export type TExampleDispatch = IExampleSuccess | IExampleError | IExampleClear
 /** --------------------------------------------------------------- */

@@ -5,10 +5,10 @@ import {ExampleReducer, IExampleReducer} from './example'
 
 export interface ApplicationState {
   router: RouterState
-  example: IExampleReducer
+  ExampleReducer: IExampleReducer
 }
 
 export const rootReducer = (history: History) => combineReducers<ApplicationState>({
   router: connectRouter(history),
-  example: ExampleReducer
+  ExampleReducer
 })

@@ -1,14 +1,8 @@
-import {ThunkAction, ThunkDispatch} from 'redux-thunk'
-import {AnyAction} from 'redux'
-import {TexampleDispatch} from './types'
-import {EXAMPLE} from './index'
+import {EXAMPLE, IExampleClear} from './index'
+import {Dispatch} from 'redux'
 
-export type TclearGetExampleAction = typeof clearGetExampleAction
-
-export const clearGetExampleAction = (): ThunkAction<void, {}, {}, AnyAction> => {
-  return (dispatch: ThunkDispatch<TexampleDispatch, {}, AnyAction>, _getState: any): void => {
-    dispatch({
-      type: EXAMPLE.GET_EXAMPLE_CLEAR
-    })
-  }
+export const clearGetExampleAction = () => (dispatch: Dispatch<IExampleClear>) => {
+  dispatch({
+    type: EXAMPLE.GET_EXAMPLE_CLEAR
+  })
 }

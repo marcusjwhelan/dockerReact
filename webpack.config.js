@@ -27,13 +27,13 @@ module.exports = {
   // adding .ts and .tsx to resolve.extensions will help babel look for .ts and .tsx files to transpile
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.ts', '.tsx', '.js', '.json', '.html']
+    extensions: ['.wasm', '.ts', '.tsx', '.mjs', '.cjs', '.js', '.json', '.html']
   },
   module: {
     rules: [
       // we use babel-loader to load our jsx and tsx files
       {
-        test: /\.(js|jsx|ts|tsx)?$/,
+        test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
@@ -45,9 +45,9 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        type: 'javascript/auto',
         test: /\.json$/,
-        loader: 'json-loader'
+        loader: 'json-loader',
+        type: 'javascript/auto'
       },
       {
         test: /\.html$/,
@@ -130,7 +130,7 @@ module.exports = {
 
         // vendor chunk
         vendor: {
-          minChunks: 4,
+          minChunks: 2,
           // name of the chunk
           name: 'vendor',
 

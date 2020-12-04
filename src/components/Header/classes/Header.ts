@@ -4,8 +4,7 @@ import {AppState} from '../../../store'
 import {ErrorHandlerHoc} from '../../classes/ErrorHandlerHoc'
 import {push} from 'connected-react-router'
 
-export interface HeaderState {
-}
+export interface HeaderState {}
 
 export interface HeaderIStateProps {
   path: string

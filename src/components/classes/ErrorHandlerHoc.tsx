@@ -17,6 +17,8 @@ export interface EHHocState {
   errorMessage: string,
 }
 
+
+
 export class ErrorHandlerHoc<T, C> extends Component<T, EHHocState & C> {
   // error handling
   protected _success: string = 'success'

@@ -55,7 +55,7 @@ module.exports = {
         test: /\.(a?png|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 8192,
         }
       },
       {
@@ -127,7 +127,7 @@ module.exports = {
       theme_color: '#ffffff',
       description: 'desc',
       background_color: '#212121',
-      crossorigin: null, //can be null, use-credentials or anonymous
+      crossorigin: null, // can be null, use-credentials or anonymous
       ios: {
         'apple-mobile-web-app-title': 'Example',
         'apple-mobile-web-app-status-bar-style': 'black'

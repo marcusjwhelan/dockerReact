@@ -81,8 +81,7 @@ interface State {
   mobileDrawerOpen: boolean
 }
 
-interface IStyles extends WithStyles<typeof styles> {
-}
+interface IStyles extends WithStyles<typeof styles> {}
 
 class MobileHeader extends HeaderBase<IStyles, State> {
   // toggles
@@ -132,8 +131,9 @@ class MobileHeader extends HeaderBase<IStyles, State> {
     return (
       <div className={classes.root}>
         <HideOnScroll {...this.props}>
-          <AppBar position="static"
-                  className={clsx(classes.appBar)}
+          <AppBar
+            position="static"
+            className={clsx(classes.appBar)}
           >
             <Toolbar className={classes.toolBar}>
               <Box display={'flex'} width={'100%'} flexDirection={'row'}>

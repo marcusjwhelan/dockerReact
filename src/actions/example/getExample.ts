@@ -1,23 +1,16 @@
-import {ThunkAction, ThunkDispatch} from 'redux-thunk'
-import {AnyAction} from 'redux'
+import {Dispatch} from 'redux'
 import axios, {AxiosResponse, AxiosError, AxiosRequestConfig} from 'axios'
+import {EXAMPLE, IExampleError, IExampleSuccess} from './index'
 import {IExample} from '../../models/example'
-import {EXAMPLE} from './index'
-import {TexampleDispatch} from './types'
 
-export type TgetExampleAction = typeof getExampleAction
-
-export const getExampleAction = (param1: string): ThunkAction<void, {}, {}, AnyAction> => {
-  return (dispatch: ThunkDispatch<TexampleDispatch, {}, AnyAction>, _getState: any): void => {
+export const getExampleAction = (_param1: string) =>
+  (dispatch: Dispatch<IExampleSuccess | IExampleError>) => {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: `exampleEndpoint.com/api/v1/getExample`,
-      params: {
-        param1
-      }
+      url: `https://jsonplaceholder.typicode.com/users`
     }
     axios.request(config)
-      .then((res: AxiosResponse<IExample>) => {
+      .then((res: AxiosResponse<IExample[]>) => {
         return dispatch({
           type: EXAMPLE.GET_EXAMPLE,
           payload: res.data
@@ -30,4 +23,3 @@ export const getExampleAction = (param1: string): ThunkAction<void, {}, {}, AnyA
         })
       })
   }
-}

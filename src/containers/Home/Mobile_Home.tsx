@@ -1,16 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {createStyles, Theme, WithStyles} from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {connect} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
+import {clearGetExampleAction, getExampleAction} from '../../actions/example'
+// import {ErrorHandlerHoc, EHHocState} from '../../components/classes/ErrorHandlerHoc'
+import {ApplicationState} from '../../reducers'
+import {isEmpty} from '../../utils/empty'
 import {IExample} from '../../models/example'
-import {clearGetExampleAction, getExampleAction, TclearGetExampleAction, TgetExampleAction} from '../../actions/example'
-import {IExampleReducer} from '../../reducers/example'
-import {ThunkDispatch} from 'redux-thunk'
-import {AppState} from '../../store'
-import {bindActionCreators} from 'redux'
-import {ErrorHandlerHoc, EHHocState} from '../../components/classes/ErrorHandlerHoc'
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -48,41 +46,33 @@ const styles = (theme: Theme) => createStyles({
   }
 })
 
-interface State {
-  getExampleWaiter: boolean
-}
-
-interface IStateProps {
-  get_example: IExample | null
-  get_example_error: string | null
-}
-
-interface IDispatchProps {
-  getExampleAction: TgetExampleAction
-  clearGetExampleAction: TclearGetExampleAction
-}
-
 interface InjectedProps extends WithStyles<typeof styles> {
 }
 
-type HomeProps = InjectedProps & IStateProps & IDispatchProps
+type HomeProps = InjectedProps
 
-const mapStateToProps = (state: any): IStateProps => {
-  const example = state.example as IExampleReducer
-  return {
-    get_example: example.get_example,
-    get_example_error: example.get_example_error
-  }
+function MobileHome(props: HomeProps) {
+  const {classes} = props
+  const dispatch = useDispatch()
+  const {get_example, get_example_error} = useSelector((state: ApplicationState) => state.ExampleReducer)
+
+  useEffect(() => {
+    dispatch(getExampleAction('hello world'))
+    return () => {
+      dispatch(clearGetExampleAction())
+    }
+  }, [dispatch])
+
+  return (
+    <Container className={classes.root}>
+      <Box>
+        {isEmpty(get_example) ? 'Loading...' :
+          get_example_error ? get_example_error : get_example?.map((users: IExample, index: number) => <h3 key={index}>{users.name}</h3>)}
+      </Box>
+    </Container>
+  )
 }
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, void, any>): IDispatchProps => {
-  return {
-    getExampleAction: bindActionCreators(getExampleAction, dispatch),
-    clearGetExampleAction: bindActionCreators(clearGetExampleAction, dispatch)
-  }
-}
-
-class MobileHome extends ErrorHandlerHoc<HomeProps, State> {
+/* class MobileHome extends ErrorHandlerHoc<HomeProps, State> {
   private _getExampleWaiter: string = 'getExampleWaiter'
 
   constructor(props: HomeProps) {
@@ -100,7 +90,7 @@ class MobileHome extends ErrorHandlerHoc<HomeProps, State> {
 
   public componentDidUpdate(_prevProps: Readonly<HomeProps>, _prevState: Readonly<EHHocState & State>,
                             _snapshot?: any): void {
-    /** Handle example */
+    /!** Handle example *!/
     if (this.state.getExampleWaiter &&
       (this.props.get_example || this.props.get_example_error) &&
       (!this.state.error && !this.state.info && !this.state.warning && !this.state.error)
@@ -116,6 +106,7 @@ class MobileHome extends ErrorHandlerHoc<HomeProps, State> {
         this.setValue(this._successMessage, 'success')
         this.openSnackbar(this._success)
         this.setValue(this._getExampleWaiter, false)
+        console.log(this.props.get_example)
         this.props.clearGetExampleAction()
       }
     }
@@ -131,8 +122,23 @@ class MobileHome extends ErrorHandlerHoc<HomeProps, State> {
       </Container>
     )
   }
-}
+}*/
+
+// useSelector() replaces this
+/* const mapStateToProps = (state: ApplicationState): IStateProps => ({
+  get_example: state.example.get_example,
+  get_example_error: state.example.get_example_error
+})*/
+
+// useDispatch() replaces this
+/*
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  getExampleAction: bindActionCreators(getExampleAction, dispatch),
+  clearGetExampleAction: bindActionCreators(clearGetExampleAction, dispatch)
+})
+*/
 
 export default withStyles(styles)(
-  connect<IStateProps, IDispatchProps, InjectedProps>(mapStateToProps, mapDispatchToProps)(MobileHome)
+  MobileHome
+  // connect<IStateProps, IDispatchProps, InjectedProps>(mapStateToProps, mapDispatchToProps)(MobileHome)
 )
