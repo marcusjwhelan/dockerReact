@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {createStyles, Theme, WithStyles} from '@material-ui/core'
 import Snackbar from '@material-ui/core/Snackbar'
 import CustomSnackbar from './CustomSnackbar'
@@ -15,110 +15,96 @@ type Tvertical = 'top' | 'bottom'
 type Thorizontal = 'left' | 'right' | 'center'
 
 interface InjectedProps extends WithStyles<typeof styles> {
-  // waiter
   snackBarWaitTime: number
-  // position
   horizontal: Thorizontal
   vertical: Tvertical
-  // snackbar show
   success: boolean
   info: boolean
   warning: boolean
   error: boolean
-  // snackbar messages
   successMessage: string
   infoMessage: string
   warningMessage: string
   errorMessage: string
-  // methods
   closeSnackbar: (type: string, reason?: string) => void
 }
-
-class ErrorHandlerBasic extends Component<InjectedProps, {}> {
-  private _success: string = 'success'
-  private _info: string = 'info'
-  private _warning: string = 'warning'
-  private _error: string = 'error'
-
-  constructor(props: InjectedProps) {
-    super(props)
-  }
-
-  public render() {
-    const {classes} = this.props
-    return (
-      <div className={classes.root}>
-        <Snackbar
-          anchorOrigin={{
-            vertical: this.props.vertical,
-            horizontal: this.props.horizontal
-          }}
-          open={this.props.success}
-          onClose={(_e: any, reason: string) => {
-            this.props.closeSnackbar(this._success, reason)
-          }}
-          autoHideDuration={this.props.snackBarWaitTime}
-        >
-          <CustomSnackbar
-            variant={this._success}
-            onClose={() => this.props.closeSnackbar(this._success)}
-            message={this.props.successMessage}
-          />
-        </Snackbar>
-        <Snackbar
-          anchorOrigin={{
-            vertical: this.props.vertical,
-            horizontal: this.props.horizontal
-          }}
-          open={this.props.info}
-          onClose={(_e: any, reason: string) => {
-            this.props.closeSnackbar(this._info, reason)
-          }}
-          autoHideDuration={this.props.snackBarWaitTime}
-        >
-          <CustomSnackbar
-            variant={this._info}
-            onClose={() => this.props.closeSnackbar(this._info)}
-            message={this.props.infoMessage}
-          />
-        </Snackbar>
-        <Snackbar
-          anchorOrigin={{
-            vertical: this.props.vertical,
-            horizontal: this.props.horizontal
-          }}
-          open={this.props.warning}
-          autoHideDuration={this.props.snackBarWaitTime}
-          onClose={(_e: any, reason: string) => {
-            this.props.closeSnackbar(this._warning, reason)
-          }}
-        >
-          <CustomSnackbar
-            variant={this._warning}
-            onClose={() => this.props.closeSnackbar(this._warning)}
-            message={this.props.warningMessage}
-          />
-        </Snackbar>
-        <Snackbar
-          anchorOrigin={{
-            vertical: this.props.vertical,
-            horizontal: this.props.horizontal
-          }}
-          open={this.props.error}
-          autoHideDuration={this.props.snackBarWaitTime}
-          onClose={(_e: any, reason: string) => {
-            this.props.closeSnackbar(this._error, reason)
-          }}
-        >
-          <CustomSnackbar
-            variant={this._error}
-            onClose={() => this.props.closeSnackbar(this._error)}
-            message={this.props.errorMessage}
-          />
-        </Snackbar>
-      </div>
-    )
-  }
+function ErrorHandlerBasic(props: InjectedProps) {
+  const _success = 'success'
+  const _warning = 'warning'
+  const _info = 'info'
+  const _error = 'error'
+  const {classes} = props
+  return (
+    <div className={classes.root}>
+      <Snackbar
+        anchorOrigin={{
+          vertical: props.vertical,
+          horizontal: props.horizontal
+        }}
+        open={props.success}
+        onClose={(_e: any, reason: string) => {
+          props.closeSnackbar(_success, reason)
+        }}
+        autoHideDuration={props.snackBarWaitTime}
+      >
+        <CustomSnackbar
+          variant={_success}
+          onClose={() => props.closeSnackbar(_success)}
+          message={props.successMessage}
+        />
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{
+          vertical: props.vertical,
+          horizontal: props.horizontal
+        }}
+        open={props.info}
+        onClose={(_e: any, reason: string) => {
+          props.closeSnackbar(_info, reason)
+        }}
+        autoHideDuration={props.snackBarWaitTime}
+      >
+        <CustomSnackbar
+          variant={_info}
+          onClose={() => props.closeSnackbar(_info)}
+          message={props.infoMessage}
+        />
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{
+          vertical: props.vertical,
+          horizontal: props.horizontal
+        }}
+        open={props.warning}
+        autoHideDuration={props.snackBarWaitTime}
+        onClose={(_e: any, reason: string) => {
+          props.closeSnackbar(_warning, reason)
+        }}
+      >
+        <CustomSnackbar
+          variant={_warning}
+          onClose={() => props.closeSnackbar(_warning)}
+          message={props.warningMessage}
+        />
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{
+          vertical: props.vertical,
+          horizontal: props.horizontal
+        }}
+        open={props.error}
+        autoHideDuration={props.snackBarWaitTime}
+        onClose={(_e: any, reason: string) => {
+          props.closeSnackbar(_error, reason)
+        }}
+      >
+        <CustomSnackbar
+          variant={_error}
+          onClose={() => props.closeSnackbar(_error)}
+          message={props.errorMessage}
+        />
+      </Snackbar>
+    </div>
+  )
 }
-
 export default withStyles(styles)(ErrorHandlerBasic)

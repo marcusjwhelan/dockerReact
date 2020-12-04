@@ -3,9 +3,6 @@ import DesktopHome from './Desktop_Home'
 import MobileHome from './Mobile_Home'
 import withStyles, {WithStyles} from '@material-ui/core/styles/withStyles'
 import Box from '@material-ui/core/Box'
-import {AppState} from '../../store'
-import {ThunkDispatch} from 'redux-thunk'
-import {connect} from 'react-redux'
 import {match, withRouter} from 'react-router'
 import {createStyles, Theme} from '@material-ui/core'
 import {History, Location} from 'history'
@@ -30,27 +27,13 @@ const styles = (_theme: Theme) => createStyles({
 interface InjectedProps extends WithStyles<typeof styles> {
 }
 
-interface IStateProps {
-}
-
-interface IDispatchProps {
-}
-
 interface HocInjected {
   location: Location
   match: match
   history: History
 }
 
-type HomeProps = IStateProps & IDispatchProps & InjectedProps & HocInjected
-
-const mapStateToProps = (_state: any): IStateProps => {
-  return {}
-}
-
-const mapDispatchToProps = (_dispatch: ThunkDispatch<AppState, void, any>): IDispatchProps => {
-  return {}
-}
+type HomeProps = InjectedProps & HocInjected
 
 function Home(props: HomeProps) {
   const {classes} = props
@@ -68,5 +51,5 @@ function Home(props: HomeProps) {
 }
 
 export default withRouter<HocInjected, any>(withStyles(styles)(
-  connect<IStateProps, IDispatchProps, InjectedProps>(mapStateToProps, mapDispatchToProps)(Home)
+  Home
 ))

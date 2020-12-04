@@ -6,12 +6,9 @@ import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
 import clsx from 'clsx'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {connect} from 'react-redux'
 import HideOnScroll from '../HideOnScroll'
-import {
-  HeaderBase, HeaderProps, HeaderIDispatchProps, HeaderInjectedProps, HeaderIStateProps,
-  HeaderMapDispatchToProps, HeaderMapStateToProps
-} from './classes/Header'
+import useErrorHandler from '../useErrorHandler'
+import {useRouter} from '../useRouter'
 
 const styles = (_theme: Theme) => createStyles({
   root: {
@@ -48,56 +45,43 @@ const styles = (_theme: Theme) => createStyles({
   }
 })
 
-interface State {
-}
-
 interface IStyles extends WithStyles<typeof styles> {
 }
 
-class DesktopHeader extends HeaderBase<IStyles, State> {
-  constructor(props: HeaderProps & IStyles) {
-    super(props)
-    this.state = {
-      ...this.ErrorHandlerStateInit
-    }
-    this.selectHome = this.selectHome.bind(this)
-  }
+function DesktopHeader(props: IStyles) {
+  const {classes} = props
+  const {
+    renderErrorHandler
+  } = useErrorHandler()
+  const {pathname, push} = useRouter()
 
-  private selectHome(_: React.KeyboardEvent | React.MouseEvent) {
-    if (this.props.path !== '/') {
-      this.props.push('/')
+  const selectHome = (_: React.KeyboardEvent | React.MouseEvent) => {
+    if (pathname !== '/') {
+      push('/')
     }
   }
-
-  public render() {
-    const {classes} = this.props
-    return (
-      <div className={classes.root}>
-        <HideOnScroll {...this.props}>
-          <AppBar position="static"
-                  className={clsx(classes.appBar)}
-          >
-            <Toolbar>
-              <Box display={'flex'} width={'100%'} flexDirection={'row'}>
-                <Box>
-                  <IconButton edge="start"
-                              size={'small'}
-                              classes={{root: classes.logoIconButton}}
-                              onClick={this.selectHome}>
-                    Home
-                  </IconButton>
-                </Box>
+  return (
+    <div className={classes.root}>
+      <HideOnScroll {...props}>
+        <AppBar position="static"
+                className={clsx(classes.appBar)}
+        >
+          <Toolbar>
+            <Box display={'flex'} width={'100%'} flexDirection={'row'}>
+              <Box>
+                <IconButton edge="start"
+                            size={'small'}
+                            classes={{root: classes.logoIconButton}}
+                            onClick={selectHome}>
+                  Home
+                </IconButton>
               </Box>
-            </Toolbar>
-          </AppBar>
-        </HideOnScroll>
-        {this.renderErrorHandler()}
-      </div>
-    )
-  }
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+      {renderErrorHandler()}
+    </div>
+  )
 }
-
-export const DesktopHeader_Comp = withStyles(styles)(
-  connect<HeaderIStateProps, HeaderIDispatchProps, HeaderInjectedProps>(HeaderMapStateToProps,
-    HeaderMapDispatchToProps)(DesktopHeader)
-)
+export const DesktopHeader_Comp = withStyles(styles)(DesktopHeader)

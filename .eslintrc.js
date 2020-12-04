@@ -20,7 +20,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     '@typescript-eslint/dot-notation': 'off',
-    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/indent': ['off', 2],
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {
@@ -127,7 +127,7 @@ module.exports = {
     'no-empty': 'off',
     'no-eval': 'error',
     'no-fallthrough': 'error',
-    'no-multiple-empty-lines': 'error',
+    'no-multiple-empty-lines': 'off',
     'no-new-wrappers': 'error',
     'no-null/no-null': 'off',
     'no-redeclare': 'error',
@@ -137,7 +137,7 @@ module.exports = {
         'hoist': 'all'
       }
     ],
-    'no-trailing-spaces': 'error',
+    'no-trailing-spaces': 'off',
     'no-underscore-dangle': 'off',
     'no-unused-labels': 'error',
     'no-var': 'error',

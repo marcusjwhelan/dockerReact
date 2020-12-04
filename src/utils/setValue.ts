@@ -1,0 +1,1 @@
+export const setValue = (key: string, value: any): any => ({[key]: value})
