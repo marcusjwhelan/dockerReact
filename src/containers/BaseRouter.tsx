@@ -2,7 +2,7 @@ import React, {Suspense, lazy} from 'react'
 import {Route, Switch} from 'react-router-dom'
 import {Header_Comp} from '../components/Header/Header'
 import Footer_comp from '../components/Footer/Footer'
-// import {PrivateRouter} from './PrivateRoute'
+// import PrivateRouter from './PrivateRoute'
 import Box from '@material-ui/core/Box'
 import {Loading} from '../components/Loading'
 import {createStyles, Theme, WithStyles} from '@material-ui/core'
@@ -67,8 +67,16 @@ type BaserRouterProps = InjectedProps
 
 function BaseRouter(props: BaserRouterProps) {
   const {classes} = props
-  const mobile = useMobile(false)
-  const {renderErrorHandler} = useErrorHandler()
+  const mobile = useMobile()
+  const {
+    setEHState,
+    openSnackbar,
+    _error,
+    _errorMessage,
+    _warning,
+    _warningMessage,
+    renderErrorHandler
+  } = useErrorHandler()
   return (
     <div className={classes.container}>
       <div className={classes.header}>
@@ -80,16 +88,17 @@ function BaseRouter(props: BaserRouterProps) {
         <Suspense fallback={<Loading/>}>
           <Switch>
             {/* Example private */}
-            {/*                            <PrivateRouter path={'/example'}
-                                           component={Example}
-                                           super_redirectPath={'/Example'}
-                                           super_openSnackbar={this.openSnackbar}
-                                           super_setValue={this.setValue}
-                                           _super_warning={this._warning}
-                                           _super_error={this._error}
-                                           _super_warningMessage={this._warningMessage}
-                                           _super_errorMessage={this._errorMessage}
-                            />*/}
+            {/* <PrivateRouter
+              path={'/example'}
+              component={Example}
+              super_redirectPath={'/Example'}
+              super_openSnackbar={openSnackbar}
+              super_setEHState={setEHState}
+              _super_warning={_warning}
+              _super_error={_error}
+              _super_warningMessage={_warningMessage}
+              _super_errorMessage={_errorMessage}
+            />*/}
             <Route exact path="/" name="Home" component={Home}/>
           </Switch>
         </Suspense>

@@ -37,7 +37,7 @@ type HomeProps = InjectedProps & HocInjected
 
 function Home(props: HomeProps) {
   const {classes} = props
-  const mobile = useMobile(false)
+  const mobile = useMobile()
   return (
     <Box height={'100%'} width={'100%'}>
       <div className={classes.root}/>

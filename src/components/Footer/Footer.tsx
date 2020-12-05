@@ -4,7 +4,7 @@ import DesktopFooter from './Dekstop_Footer'
 import useMobile from '../useMobile'
 
 function Footer() {
-  const mobile = useMobile(false)
+  const mobile = useMobile()
   return (
     <div>
       {mobile ?

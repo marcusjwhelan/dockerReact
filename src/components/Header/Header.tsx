@@ -4,7 +4,7 @@ import {DesktopHeader_Comp} from './Desktop_Header'
 import useMobile from '../useMobile'
 
 function Header() {
-  const mobile = useMobile(false)
+  const mobile = useMobile()
   return (
     <div>
       {mobile ?

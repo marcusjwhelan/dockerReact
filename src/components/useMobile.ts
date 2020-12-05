@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 
-function useMobile(initMobile: boolean) {
-  const [mobile, setMobile] = useState<boolean>(initMobile)
+function useMobile() {
+  const [mobile, setMobile] = useState<boolean>(window.innerWidth <= 840)
   useEffect(() => {
     window.addEventListener('resize', () => setMobile(window.innerWidth <= 840))
     return () => {

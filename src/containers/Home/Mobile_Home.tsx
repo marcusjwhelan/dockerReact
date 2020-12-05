@@ -49,7 +49,7 @@ interface InjectedProps extends WithStyles<typeof styles> {
 
 type HomeProps = InjectedProps
 
-function MobileHome(props: HomeProps) {
+function MobileHome(props: HomeProps): JSX.Element {
   const {classes} = props
   const {get_example, get_example_error} = useExample()
 
