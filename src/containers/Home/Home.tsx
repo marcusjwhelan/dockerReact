@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box'
 import {match, withRouter} from 'react-router'
 import {createStyles, Theme} from '@material-ui/core'
 import {History, Location} from 'history'
-import useMobile from '../../components/useMobile'
+import useMobile from '../../components/hooks/useMobile'
 
 const styles = (_theme: Theme) => createStyles({
   root: {

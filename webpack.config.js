@@ -37,7 +37,7 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
-        },
+        }
       },
       // css-loader to bundle all the css files into one file and style-loader to add all the styles  inside the style tag of the document
       {
@@ -94,7 +94,7 @@ module.exports = {
         test: /\.eot(\?.*)?$/,
         loader: 'file-loader',
         options: {
-          name: 'fonts/[path][name].[ext]',
+          name: 'fonts/[path][name].[ext]'
         }
       },
       {
@@ -172,7 +172,7 @@ module.exports = {
       theme_color: '#ffffff',
       description: 'desc',
       background_color: '#212121',
-      crossorigin: null, //can be null, use-credentials or anonymous
+      crossorigin: null, // can be null, use-credentials or anonymous
       ios: {
         'apple-mobile-web-app-title': 'Example',
         'apple-mobile-web-app-status-bar-style': 'black'
@@ -197,7 +197,7 @@ module.exports = {
     }),
     new DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
       }
     })
   ]

@@ -5,18 +5,18 @@ import Footer_comp from '../components/Footer/Footer'
 // import PrivateRouter from './PrivateRoute'
 import Box from '@material-ui/core/Box'
 import {Loading} from '../components/Loading'
-import {createStyles, Theme, WithStyles} from '@material-ui/core'
-import withStyles from '@material-ui/core/styles/withStyles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Fab from '@material-ui/core/Fab'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import useMobile from '../components/useMobile'
-import useErrorHandler from '../components/useErrorHandler'
+import useMobile from '../components/hooks/useMobile'
+import useErrorHandler from '../components/hooks/useErrorHandler'
+import {makeStyles} from '@material-ui/core/styles'
+import {EXTheme} from '../theme/theme'
 
 const ScrollTop = lazy(() => import('../components/ScrollTop'))
 const Home = lazy(() => import('./Home/Home'))
 
-const styles = (_theme: Theme) => createStyles({
+const useStyles = makeStyles(() => ({
   container: {
     position: 'relative',
     display: 'flex',
@@ -33,7 +33,7 @@ const styles = (_theme: Theme) => createStyles({
   toolBarG: {
     minHeight: 64,
     '@media only screen and (max-width:840px)': {
-      minHeight: 78
+      minHeight: 64
     }
   },
   contentDesktop: {
@@ -57,19 +57,14 @@ const styles = (_theme: Theme) => createStyles({
     // @ts-ignore
     backgroundColor: 'black'
   }
-})
+}))
 
 
-interface InjectedProps extends WithStyles<typeof styles> {
-}
-
-type BaserRouterProps = InjectedProps
-
-function BaseRouter(props: BaserRouterProps) {
-  const {classes} = props
+function BaseRouter() {
+  const classes = useStyles(EXTheme)
   const mobile = useMobile()
   const {
-    setEHState,
+    ehDispatch,
     openSnackbar,
     _error,
     _errorMessage,
@@ -99,7 +94,7 @@ function BaseRouter(props: BaserRouterProps) {
               _super_warningMessage={_warningMessage}
               _super_errorMessage={_errorMessage}
             />*/}
-            <Route exact path="/" name="Home" component={Home}/>
+            <Route exact path="/" component={Home}/>
           </Switch>
         </Suspense>
         {/* Error messages and information */}
@@ -109,7 +104,7 @@ function BaseRouter(props: BaserRouterProps) {
         <Footer_comp/>
       </div>
       <Suspense fallback={<div/>}>
-        <ScrollTop {...props}>
+        <ScrollTop>
           <Fab className={classes.fab} color="primary" size="large" aria-label="scroll back to top">
             <KeyboardArrowUpIcon/>
           </Fab>
@@ -118,6 +113,4 @@ function BaseRouter(props: BaserRouterProps) {
     </div>
   )
 }
-export const Base_Router = withStyles(styles)(
-  BaseRouter
-)
+export default BaseRouter

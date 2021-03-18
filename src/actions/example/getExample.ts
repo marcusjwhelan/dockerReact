@@ -1,7 +1,8 @@
 import {Dispatch} from 'redux'
-import axios, {AxiosResponse, AxiosError, AxiosRequestConfig} from 'axios'
+import axios, {AxiosResponse, AxiosRequestConfig} from 'axios'
 import {EXAMPLE, IExampleError, IExampleSuccess} from './index'
 import {IExample} from '../../models/example'
+import {EXAxiosError} from '../../utils/interfaces'
 
 export const getExampleAction = (_param1: string) =>
   (dispatch: Dispatch<IExampleSuccess | IExampleError>) => {
@@ -16,10 +17,10 @@ export const getExampleAction = (_param1: string) =>
           payload: res.data
         })
       })
-      .catch((err: AxiosError) => {
+      .catch((err: EXAxiosError) => {
         return dispatch({
           type: EXAMPLE.GET_EXAMPLE_ERROR,
-          payload: err.message
+          payload: err.response.data
         })
       })
   }

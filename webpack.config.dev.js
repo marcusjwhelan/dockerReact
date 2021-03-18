@@ -33,7 +33,7 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
-        },
+        }
       },
 
       // css-loader to bundle all the css files into one file and style-loader to add all the styles  inside the style tag of the document
@@ -55,11 +55,11 @@ module.exports = {
         test: /\.(a?png|svg)$/,
         loader: 'url-loader',
         options: {
-          limit: 8192,
+          limit: 8192
         }
       },
       {
-        test: /\.(jpe?g|gif|bmp|mp3|mp4|ogg|wav|eot|ttf|woff|woff2)$/,
+        test: /\.(jpe?g|gif|bmp|mp3|mp4|ogg|wav|eot|ttf|woff|woff2|otf)$/,
         use: 'file-loader'
       },
       {
@@ -153,7 +153,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }
     })
   ]

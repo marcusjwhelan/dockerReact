@@ -1,25 +1,22 @@
 import React from 'react'
-import {Provider} from 'react-redux'
-import {MuiThemeProvider} from '@material-ui/core'
+import {Provider, ReactReduxContext} from 'react-redux'
+import {ThemeProvider} from '@material-ui/core'
 import {ConnectedRouter} from 'connected-react-router'
 import {history} from './store'
 import {configureStore} from './store'
-import {Base_Router} from './containers/BaseRouter'
-import {HMTheme} from './theme/theme'
+import BaseRouter from './containers/BaseRouter'
+import {EXTheme} from './theme/theme'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import {BrowserRouter} from 'react-router-dom'
 
-const store = configureStore()
+const store = configureStore({})
 
 export const Application = () => (
   <Provider store={store}>
-    <MuiThemeProvider theme={HMTheme}>
+    <ThemeProvider theme={EXTheme}>
       <CssBaseline/>
-      <ConnectedRouter history={history}>
-        <BrowserRouter>
-          <Base_Router/>
-        </BrowserRouter>
+      <ConnectedRouter history={history} context={ReactReduxContext} noInitialPop>
+        <BaseRouter/>
       </ConnectedRouter>
-    </MuiThemeProvider>
+    </ThemeProvider>
   </Provider>
 )

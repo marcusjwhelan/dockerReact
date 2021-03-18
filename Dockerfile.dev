@@ -7,6 +7,9 @@ WORKDIR /var/www
 # copy all files in current directory to working directory
 COPY package.json /var/www/
 
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
 # install items needed on alpine linux for npm to install modules correctly
 RUN apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
 

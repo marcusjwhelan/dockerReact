@@ -1,29 +1,41 @@
-import React from 'react'
-import {createStyles, Theme, WithStyles} from '@material-ui/core'
-import withStyles from '@material-ui/core/styles/withStyles'
+import React, {useEffect} from 'react'
 import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
-import useExample from '../../components/useExample'
+import Backdrop from '@material-ui/core/Backdrop'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import useExample from '../../components/hooks/useExample'
 import {isEmpty} from '../../utils/empty'
 import {IExample} from '../../models/example'
+import {makeStyles} from '@material-ui/core/styles'
+import {EXTheme} from '../../theme/theme'
+import {Theme} from '@material-ui/core'
 
-const styles = (_theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   ContainerRoot: {
     height: '100%',
     paddingLeft: '0',
     paddingRight: '0',
     maxWidth: 1600
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff'
   }
-})
+}))
 
-interface InjectedProps extends WithStyles<typeof styles> {
-}
+function DesktopHome() {
+  const classes = useStyles(EXTheme)
+  const {
+    examples,
+    get_example_loading,
+    dispatchGetExample,
+    dispatchResetExamples
+  } = useExample()
 
-type HomeProps = InjectedProps
-
-function DesktopHome(props: HomeProps) {
-  const {classes} = props
-  const {get_example, get_example_error} = useExample()
+  useEffect(() => {
+    dispatchResetExamples()
+    dispatchGetExample()
+  }, [])
 
   return (
     <Container classes={{root: classes.ContainerRoot}}>
@@ -33,11 +45,20 @@ function DesktopHome(props: HomeProps) {
              flexDirection={'column'}
              justifyContent={'flex-start'}
         >
-          {isEmpty(get_example) ? 'Loading...' :
-            get_example_error ? get_example_error : get_example?.map((users: IExample, index: number) => <h3 key={index}>{users.name}</h3>)}
+          {!isEmpty(examples) ?
+            examples?.map((users: IExample, index: number) => <h3 key={index}>{users.name}</h3>)
+            :
+            <div/>
+          }
         </Box>
       </Box>
+      <Backdrop
+        className={classes.backdrop}
+        open={get_example_loading}
+      >
+        <CircularProgress color={'inherit'}/>
+      </Backdrop>
     </Container>
   )
 }
-export default withStyles(styles)(DesktopHome)
+export default DesktopHome

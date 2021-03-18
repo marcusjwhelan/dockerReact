@@ -1,24 +1,31 @@
 module.exports = {
   'env': {
     'browser': true,
-    'es6': true,
+    'es2020': true,
     'node': true
   },
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'project': 'tsconfig.json',
     'sourceType': 'module',
-    'createDefaultProgram': true
+    'createDefaultProgram': true,
+    'ecmaVersion': 11,
+    'ecmaFeatures': {
+      'jsx': true
+    }
   },
   'plugins': [
     'eslint-plugin-no-null',
     'eslint-plugin-jsdoc',
     '@typescript-eslint',
-    'react-hooks'
+    'react-hooks',
+    'mui-unused-classes'
   ],
   'rules': {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+    'mui-unused-classes/unused-classes': 2,
+    'no-unused-expressions':'off',
     '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/indent': ['off', 2],
     '@typescript-eslint/member-delimiter-style': [
@@ -42,12 +49,7 @@ module.exports = {
     '@typescript-eslint/no-param-reassign': 'off',
     '@typescript-eslint/no-parameter-properties': 'off',
     '@typescript-eslint/no-require-imports': 'off',
-    '@typescript-eslint/no-unused-expressions': [
-      'error',
-      {
-        'allowShortCircuit': true
-      }
-    ],
+    '@typescript-eslint/no-unused-expressions': 2,
     '@typescript-eslint/no-use-before-define': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/prefer-namespace-keyword': 'error',

@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux'
-import {ApplicationState} from '../reducers'
+import {ApplicationState} from '../../reducers'
 import {push as pushRouter} from 'connected-react-router'
 
 export interface IUseRouter {

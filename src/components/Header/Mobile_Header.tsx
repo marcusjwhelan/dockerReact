@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {createStyles, Theme, WithStyles} from '@material-ui/core'
+import {Theme} from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,13 +14,14 @@ import MenuIcon from '@material-ui/icons/Menu'
 import HomeIcon from '@material-ui/icons/Home'
 import Box from '@material-ui/core/Box'
 import clsx from 'clsx'
-import withStyles from '@material-ui/core/styles/withStyles'
 import HideOnScroll from '../HideOnScroll'
-import useErrorHandler from '../useErrorHandler'
-import {useRouter} from '../useRouter'
+import useErrorHandler from '../hooks/useErrorHandler'
+import {useRouter} from '../hooks/useRouter'
+import {makeStyles} from '@material-ui/core/styles'
+import {EXTheme} from '../../theme/theme'
 
 const drawerWidth: number = 240
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   whiteText: {
     color: 'white'
   },
@@ -71,12 +72,9 @@ const styles = (theme: Theme) => createStyles({
     top: 68,
     zIndex: 10
   }
-})
-
-interface IStyles extends WithStyles<typeof styles> {}
-
-function MobileHeader(props: IStyles) {
-  const {classes} = props
+}))
+function MobileHeader() {
+  const classes = useStyles(EXTheme)
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
   const {
     renderErrorHandler
@@ -105,7 +103,7 @@ function MobileHeader(props: IStyles) {
   }
   return (
     <div className={classes.root}>
-      <HideOnScroll {...props}>
+      <HideOnScroll>
         <AppBar
           position="static"
           className={clsx(classes.appBar)}
@@ -161,4 +159,4 @@ function MobileHeader(props: IStyles) {
   )
 }
 
-export const MobileHeader_Comp = withStyles(styles)(MobileHeader)
+export default MobileHeader

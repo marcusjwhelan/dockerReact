@@ -1,21 +1,22 @@
 import React, {useEffect} from 'react'
-import {createStyles, Theme, WithStyles} from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
 import clsx from 'clsx'
-import withStyles from '@material-ui/core/styles/withStyles'
 import HideOnScroll from '../HideOnScroll'
-import useErrorHandler from '../useErrorHandler'
-import {useRouter} from '../useRouter'
-import {setValue} from '../../utils/setValue'
+import useErrorHandler from '../hooks/useErrorHandler'
+import {useRouter} from '../hooks/useRouter'
+import {makeStyles} from '@material-ui/core/styles'
+import {Theme} from '@material-ui/core'
+import {EXTheme} from '../../theme/theme'
 
-const styles = (_theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1
   },
   appBar: {
+    maxHeight: 64,
     // @ts-ignore
     backgroundColor: 'black'
   },
@@ -44,19 +45,20 @@ const styles = (_theme: Theme) => createStyles({
   dropDownList: {
     padding: 0
   }
-})
+}))
 
-interface IStyles extends WithStyles<typeof styles> {
-}
-
-function DesktopHeader(props: IStyles) {
-  const {classes} = props
+function DesktopHeader() {
+  const classes = useStyles(EXTheme)
   const {
-    setEHState,
-    state,
-    openSnackbar,
+    _success,
+    _successMessage,
+    _warning,
+    _warningMessage,
     _error,
     _errorMessage,
+    ehState,
+    ehDispatch,
+    openSnackbar,
     renderErrorHandler
   } = useErrorHandler()
   const {pathname, push} = useRouter()
@@ -67,13 +69,13 @@ function DesktopHeader(props: IStyles) {
     }
   }
   useEffect(() => {
-    setEHState(setValue(_errorMessage, 'hello world'))
+    ehDispatch({type: _errorMessage, payload: 'hello world'})
     openSnackbar(_error)
   }, [])
 
   return (
     <div className={classes.root}>
-      <HideOnScroll {...props}>
+      <HideOnScroll>
         <AppBar position="static"
                 className={clsx(classes.appBar)}
         >
@@ -95,4 +97,4 @@ function DesktopHeader(props: IStyles) {
     </div>
   )
 }
-export const DesktopHeader_Comp = withStyles(styles)(DesktopHeader)
+export default DesktopHeader

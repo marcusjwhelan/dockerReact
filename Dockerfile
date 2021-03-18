@@ -5,6 +5,9 @@ FROM node:14.15.1-alpine3.11 as react-build-stage
 # change working directory to the app directory
 WORKDIR /var/www
 
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
 # copy all files in current directory to working directory
 COPY package.json /var/www/
 

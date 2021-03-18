@@ -7,7 +7,7 @@ services:
     hostname: client
     build:
       context: ./
-      dockerfile: Dockerfile.dev
+      dockerfile: ./Dockerfile.dev
     ports:
       - target: 3000
         published: 3000
@@ -15,9 +15,9 @@ services:
         mode: host
     volumes:
       - ./:/var/www
-      - node_modules:/var/www/node_modules
+      - docker_react_node_modules:/var/www/node_modules
     command: npm run start_docker
 
 volumes:
-  node_modules:
+  docker_react_node_modules:
     driver: local

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // Target latest version of ECMAScript.
-    "target": "esnext",
+    "target": "es2020",
     // path to output directory
     "outDir": "./public/",
     // enable strict null checks as a best practice
@@ -20,13 +20,15 @@
     "jsx": "react",
     "baseUrl": "./src",
     "lib": [
-      "es2015",
+      "es2020",
       "dom.iterable",
       "es2016.array.include",
-      "es2017.object",
+      "es2019.object",
       "dom"
     ],
     "module": "esnext",
+    "downlevelIteration": false,
+    "checkJs": false,
     "removeComments": true,
     "alwaysStrict": true,
     "allowUnreachableCode": false,

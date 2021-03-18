@@ -6,7 +6,7 @@ import {History, createHashHistory} from 'history'
 import logger from 'redux-logger'
 
 // export const history: History = createBrowserHistory()
-export const history: History = createHashHistory()
+export const history: History = createHashHistory({hashType: 'slash'})
 export type AppState = ReturnType<typeof rootReducer>
 
 export const configureStore = (initialState: any = {}) => {

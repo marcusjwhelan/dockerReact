@@ -1,7 +1,7 @@
 import React from 'react'
 import MobileFooter from './Mobile_Footer'
 import DesktopFooter from './Dekstop_Footer'
-import useMobile from '../useMobile'
+import useMobile from '../hooks/useMobile'
 
 function Footer() {
   const mobile = useMobile()
