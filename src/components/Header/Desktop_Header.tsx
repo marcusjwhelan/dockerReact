@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
+import TextField from '@material-ui/core/TextField'
 import Box from '@material-ui/core/Box'
 import clsx from 'clsx'
 import HideOnScroll from '../HideOnScroll'
@@ -10,6 +11,22 @@ import {useRouter} from '../hooks/useRouter'
 import {makeStyles} from '@material-ui/core/styles'
 import {Theme} from '@material-ui/core'
 import {EXTheme} from '../../theme/theme'
+
+// TODO ISSUE HERE
+/*
+ installed with npm install @material-ui/core@next @material-ui/icons@next @material-ui/lab@next date-fns
+
+to run
+docker-compose -f docker-compose-dev.yml build --no-cache
+docker-compose -f docker-compose-dev.yml up
+
+or
+npm run start to get other errors as well.
+ */
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider'
+import MobileDatePicker from '@material-ui/lab/MobileDatePicker'
+import DesktopDatePicker from '@material-ui/lab/DesktopDatePicker'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -88,6 +105,17 @@ function DesktopHeader() {
                             onClick={selectHome}>
                   Home
                 </IconButton>
+
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <MobileDatePicker
+                    label="For mobile"
+                    value={''}
+                    onChange={(newValue: string | null) => {
+                      console.log(newValue)
+                    }}
+                    renderInput={(params: any) => <TextField {...params} margin="normal" />}
+                  />
+                </LocalizationProvider>
               </Box>
             </Box>
           </Toolbar>
